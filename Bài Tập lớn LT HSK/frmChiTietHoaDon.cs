@@ -115,6 +115,8 @@ namespace Bài_Tập_lớn_LT_HSK
 
         private void btnHuy_Click(object sender, EventArgs e)
         {
+            LoadThongTinHoaDon();
+            LoadChiTietHoaDon();
             ChuyenSangNhapLieu(false);
         }
 
@@ -143,21 +145,16 @@ namespace Bài_Tập_lớn_LT_HSK
                     {
                         cmd.Parameters.AddWithValue("@dNgayBan", ngayBan);
                     }
-                    else
-                    {
-                        MessageBox.Show("Ngày bán không hợp lệ!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
+                    
 
                     cmd.ExecuteNonQuery();
                   
-                    MessageBox.Show("Cập nhật hóa đơn thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     LoadThongTinHoaDon();
 
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Lỗi: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    GhiLog("Lỗi: " + ex.Message);
                 }
             }
         }
@@ -167,6 +164,78 @@ namespace Bài_Tập_lớn_LT_HSK
             frmReport frmReport = new frmReport(maHD);
             frmReport.ShowDialog();
             
+        }
+
+        private void GhiLog(string noiDung)
+        {
+            string connString = ConfigurationManager.ConnectionStrings["db_btlQuanLiBanHang"]?.ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                try
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand("sp_GhiLog", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@NoiDung", noiDung);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    
+                    System.IO.File.AppendAllText("error_log.txt", DateTime.Now + ": " + ex.Message + Environment.NewLine);
+                }
+            }
+        }
+
+        private bool KiemTraDuLieu()
+        {
+            // Kiểm tra tên khách hàng không được để trống
+            if (string.IsNullOrWhiteSpace(txtTenKH.Text))
+                return false;
+            if (string.IsNullOrWhiteSpace(txtDiaChi.Text))
+                return false;
+            // Kiểm tra số điện thoại (chỉ được nhập số, độ dài từ 10-11 số)
+            if (!System.Text.RegularExpressions.Regex.IsMatch(txtSDT.Text, @"^\d{10,11}$"))
+                return false;
+
+            // Kiểm tra ngày lập hóa đơn hợp lệ
+            DateTime ngayBan;
+            if (!DateTime.TryParseExact(mtbNgayLap.Text, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out ngayBan))
+                return false;
+
+            // Kiểm tra tên nhân viên không được để trống
+            if (string.IsNullOrWhiteSpace(txtTenNV.Text))
+                return false;
+
+            // Nếu tất cả hợp lệ, trả về true
+            return true;
+        }
+
+        private void txtTenKH_TextChanged(object sender, EventArgs e)
+        {
+            btnLuu.Enabled = KiemTraDuLieu();
+        }
+
+        private void txtSDT_TextChanged(object sender, EventArgs e)
+        {
+            btnLuu.Enabled = KiemTraDuLieu();
+        }
+
+        private void txtDiaChi_TextChanged(object sender, EventArgs e)
+        {
+            btnLuu.Enabled = KiemTraDuLieu();
+        }
+
+        private void mtbNgayLap_TextChanged(object sender, EventArgs e)
+        {
+            btnLuu.Enabled = KiemTraDuLieu();
+        }
+
+        private void txtTenNV_TextChanged(object sender, EventArgs e)
+        {
+            btnLuu.Enabled = KiemTraDuLieu();
         }
     }
 }

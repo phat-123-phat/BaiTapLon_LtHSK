@@ -66,6 +66,7 @@ namespace Bài_Tập_lớn_LT_HSK
             this.txtSdt.Name = "txtSdt";
             this.txtSdt.Size = new System.Drawing.Size(206, 22);
             this.txtSdt.TabIndex = 2;
+            this.txtSdt.TextChanged += new System.EventHandler(this.txtSdt_TextChanged);
             // 
             // txtMatKhau
             // 
@@ -74,6 +75,7 @@ namespace Bài_Tập_lớn_LT_HSK
             this.txtMatKhau.PasswordChar = '*';
             this.txtMatKhau.Size = new System.Drawing.Size(206, 22);
             this.txtMatKhau.TabIndex = 3;
+            this.txtMatKhau.TextChanged += new System.EventHandler(this.txtMatKhau_TextChanged);
             // 
             // btnDangNhap
             // 
@@ -142,6 +144,7 @@ namespace Bài_Tập_lớn_LT_HSK
             this.label3.Size = new System.Drawing.Size(185, 38);
             this.label3.TabIndex = 10;
             this.label3.Text = "Đăng nhập";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // frmDangNhap
             // 

@@ -52,6 +52,7 @@ namespace Bài_Tập_lớn_LT_HSK
             this.mtbNgayVaoLam = new System.Windows.Forms.MaskedTextBox();
             this.mtbNgaySinh = new System.Windows.Forms.MaskedTextBox();
             this.lblTrangThai = new System.Windows.Forms.Label();
+            this.lblThongBao = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDsNhanVien)).BeginInit();
             this.SuspendLayout();
             // 
@@ -72,6 +73,7 @@ namespace Bài_Tập_lớn_LT_HSK
             this.txtHoTen.Name = "txtHoTen";
             this.txtHoTen.Size = new System.Drawing.Size(199, 22);
             this.txtHoTen.TabIndex = 1;
+            this.txtHoTen.TextChanged += new System.EventHandler(this.txtHoTen_TextChanged);
             // 
             // label1
             // 
@@ -97,6 +99,7 @@ namespace Bài_Tập_lớn_LT_HSK
             this.txtCCCD.Name = "txtCCCD";
             this.txtCCCD.Size = new System.Drawing.Size(199, 22);
             this.txtCCCD.TabIndex = 3;
+            this.txtCCCD.TextChanged += new System.EventHandler(this.txtCCCD_TextChanged);
             // 
             // label3
             // 
@@ -113,6 +116,7 @@ namespace Bài_Tập_lớn_LT_HSK
             this.txtSdt.Name = "txtSdt";
             this.txtSdt.Size = new System.Drawing.Size(199, 22);
             this.txtSdt.TabIndex = 5;
+            this.txtSdt.TextChanged += new System.EventHandler(this.txtSdt_TextChanged);
             // 
             // label4
             // 
@@ -129,6 +133,7 @@ namespace Bài_Tập_lớn_LT_HSK
             this.txtDiaChi.Name = "txtDiaChi";
             this.txtDiaChi.Size = new System.Drawing.Size(199, 22);
             this.txtDiaChi.TabIndex = 7;
+            this.txtDiaChi.TextChanged += new System.EventHandler(this.txtDiaChi_TextChanged);
             // 
             // rdoNam
             // 
@@ -140,6 +145,7 @@ namespace Bài_Tập_lớn_LT_HSK
             this.rdoNam.TabStop = true;
             this.rdoNam.Text = "Nam";
             this.rdoNam.UseVisualStyleBackColor = true;
+            this.rdoNam.CheckedChanged += new System.EventHandler(this.rdoNam_CheckedChanged);
             // 
             // rdoNu
             // 
@@ -151,6 +157,7 @@ namespace Bài_Tập_lớn_LT_HSK
             this.rdoNu.TabStop = true;
             this.rdoNu.Text = "Nữ";
             this.rdoNu.UseVisualStyleBackColor = true;
+            this.rdoNu.TextChanged += new System.EventHandler(this.rdoNu_CheckedChanged);
             // 
             // label5
             // 
@@ -221,9 +228,9 @@ namespace Bài_Tập_lớn_LT_HSK
             // 
             // btnLuu
             // 
-            this.btnLuu.Location = new System.Drawing.Point(385, 275);
+            this.btnLuu.Location = new System.Drawing.Point(246, 275);
             this.btnLuu.Name = "btnLuu";
-            this.btnLuu.Size = new System.Drawing.Size(90, 30);
+            this.btnLuu.Size = new System.Drawing.Size(229, 30);
             this.btnLuu.TabIndex = 20;
             this.btnLuu.Text = "Lưu";
             this.btnLuu.UseVisualStyleBackColor = true;
@@ -246,6 +253,7 @@ namespace Bài_Tập_lớn_LT_HSK
             this.mtbNgayVaoLam.Name = "mtbNgayVaoLam";
             this.mtbNgayVaoLam.Size = new System.Drawing.Size(100, 22);
             this.mtbNgayVaoLam.TabIndex = 23;
+            this.mtbNgayVaoLam.TextChanged += new System.EventHandler(this.mtbNgayVaoLam_TextChanged);
             // 
             // mtbNgaySinh
             // 
@@ -254,6 +262,7 @@ namespace Bài_Tập_lớn_LT_HSK
             this.mtbNgaySinh.Name = "mtbNgaySinh";
             this.mtbNgaySinh.Size = new System.Drawing.Size(100, 22);
             this.mtbNgaySinh.TabIndex = 22;
+            this.mtbNgaySinh.TextChanged += new System.EventHandler(this.mtbNgaySinh_TextChanged);
             // 
             // lblTrangThai
             // 
@@ -264,11 +273,21 @@ namespace Bài_Tập_lớn_LT_HSK
             this.lblTrangThai.TabIndex = 24;
             this.lblTrangThai.Text = "label8";
             // 
+            // lblThongBao
+            // 
+            this.lblThongBao.AutoSize = true;
+            this.lblThongBao.Location = new System.Drawing.Point(387, 192);
+            this.lblThongBao.Name = "lblThongBao";
+            this.lblThongBao.Size = new System.Drawing.Size(46, 17);
+            this.lblThongBao.TabIndex = 25;
+            this.lblThongBao.Text = "label8";
+            // 
             // frmQuanLyNhanVien
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 678);
+            this.Controls.Add(this.lblThongBao);
             this.Controls.Add(this.lblTrangThai);
             this.Controls.Add(this.mtbNgayVaoLam);
             this.Controls.Add(this.mtbNgaySinh);
@@ -326,5 +345,6 @@ namespace Bài_Tập_lớn_LT_HSK
         private System.Windows.Forms.MaskedTextBox mtbNgayVaoLam;
         private System.Windows.Forms.MaskedTextBox mtbNgaySinh;
         private System.Windows.Forms.Label lblTrangThai;
+        private System.Windows.Forms.Label lblThongBao;
     }
 }

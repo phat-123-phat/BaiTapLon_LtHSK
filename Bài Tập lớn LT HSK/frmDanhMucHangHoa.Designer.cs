@@ -138,6 +138,7 @@ namespace Bài_Tập_lớn_LT_HSK
             this.txtDanhMuc.Name = "txtDanhMuc";
             this.txtDanhMuc.Size = new System.Drawing.Size(229, 22);
             this.txtDanhMuc.TabIndex = 9;
+            this.txtDanhMuc.TextChanged += new System.EventHandler(this.txtDanhMuc_TextChanged);
             // 
             // lblSuaThanh
             // 

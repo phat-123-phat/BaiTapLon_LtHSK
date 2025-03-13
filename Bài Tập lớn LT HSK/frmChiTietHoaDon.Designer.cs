@@ -83,6 +83,7 @@ namespace Bài_Tập_lớn_LT_HSK
             this.txtTenKH.Name = "txtTenKH";
             this.txtTenKH.Size = new System.Drawing.Size(230, 22);
             this.txtTenKH.TabIndex = 2;
+            this.txtTenKH.TextChanged += new System.EventHandler(this.txtTenKH_TextChanged);
             // 
             // txtSDT
             // 
@@ -90,6 +91,7 @@ namespace Bài_Tập_lớn_LT_HSK
             this.txtSDT.Name = "txtSDT";
             this.txtSDT.Size = new System.Drawing.Size(230, 22);
             this.txtSDT.TabIndex = 4;
+            this.txtSDT.TextChanged += new System.EventHandler(this.txtSDT_TextChanged);
             // 
             // label3
             // 
@@ -106,6 +108,7 @@ namespace Bài_Tập_lớn_LT_HSK
             this.txtDiaChi.Name = "txtDiaChi";
             this.txtDiaChi.Size = new System.Drawing.Size(230, 22);
             this.txtDiaChi.TabIndex = 6;
+            this.txtDiaChi.TextChanged += new System.EventHandler(this.txtDiaChi_TextChanged);
             // 
             // label4
             // 
@@ -153,6 +156,7 @@ namespace Bài_Tập_lớn_LT_HSK
             this.txtTenNV.Name = "txtTenNV";
             this.txtTenNV.Size = new System.Drawing.Size(230, 22);
             this.txtTenNV.TabIndex = 12;
+            this.txtTenNV.TextChanged += new System.EventHandler(this.txtTenNV_TextChanged);
             // 
             // label6
             // 
@@ -198,6 +202,7 @@ namespace Bài_Tập_lớn_LT_HSK
             this.mtbNgayLap.Size = new System.Drawing.Size(230, 22);
             this.mtbNgayLap.TabIndex = 15;
             this.mtbNgayLap.ValidatingType = typeof(System.DateTime);
+            this.mtbNgayLap.TextChanged += new System.EventHandler(this.mtbNgayLap_TextChanged);
             // 
             // label10
             // 

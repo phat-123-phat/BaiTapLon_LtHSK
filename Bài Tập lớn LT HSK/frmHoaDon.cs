@@ -23,18 +23,51 @@ namespace Bài_Tập_lớn_LT_HSK
         private void frmHoaDon_Load(object sender, EventArgs e)
         {
             LoadHoaDon();
+            rboHoaDonBan.Checked = true;
+
+            // Gán sự kiện CheckedChanged cho RadioButton
+            rboHoaDonBan.CheckedChanged += RadioButton_CheckedChanged;
+            rboHoaDonNhap.CheckedChanged += RadioButton_CheckedChanged;
+
+            btnChiTiet.Enabled = false;
         }
         private void LoadHoaDon()
         {
             using (SqlConnection conn = new SqlConnection(connString))
             {
-                SqlDataAdapter da = new SqlDataAdapter("sp_GetHoaDon", conn);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
+                conn.Open(); // Mở kết nối
 
-                dgvHoaDon.DataSource = dt;
+                string storedProcedure;
+
+                // Xác định stored procedure tương ứng
+                if (rboHoaDonBan.Checked)
+                {
+                    storedProcedure = "sp_GetHoaDon";
+                }
+                else if (rboHoaDonNhap.Checked)
+                {
+                    storedProcedure = "sp_GetHoaDonNhap";
+                }
+                else
+                {
+                    storedProcedure = "sp_GetHoaDon";
+                }
+
+                using (SqlCommand cmd = new SqlCommand(storedProcedure, conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure; // Đặt kiểu là stored procedure
+
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd)) // Truyền command vào adapter
+                    {
+                        DataTable dt = new DataTable();
+                        da.Fill(dt);
+
+                        dgvHoaDon.DataSource = dt;
+                    }
+                }
             }
         }
+
 
         private void btnChiTiet_Click(object sender, EventArgs e)
         {
@@ -47,16 +80,26 @@ namespace Bài_Tập_lớn_LT_HSK
                 frm.MdiParent = this.MdiParent; // Đặt form con trong form cha
                 frm.Show();
                 this.Close();
+                
             }
             else
             {
-                MessageBox.Show("Vui lòng chọn một hóa đơn!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                
             }
         }
 
         private void dgvHoaDon_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+        private void RadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            LoadHoaDon();
+        }
+
+        private void dgvHoaDon_SelectionChanged(object sender, EventArgs e)
+        {
+            btnChiTiet.Enabled = dgvHoaDon.SelectedRows.Count > 0;
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Bài_Tập_lớn_LT_HSK
         private enum TrangThai { None, Them, Sua, XOA }
         private static TrangThai trangThaiHienTai = TrangThai.None;
 
-        string connString = ConfigurationManager.ConnectionStrings["db_btlQuanLiBanHang"].ConnectionString;
+        string connString = ConfigurationManager.ConnectionStrings["db_btlQuanLiBanHang"]?.ConnectionString;
         public frmQuanLyNhanVien()
         {
             InitializeComponent();
@@ -26,6 +26,9 @@ namespace Bài_Tập_lớn_LT_HSK
         {
             LoadData();
             ChuyenSangNhapLieu(false);
+            btnTim.Enabled = false;
+            lblThongBao.Visible = false;
+
         }
 
         public void LoadData()
@@ -54,13 +57,14 @@ namespace Bài_Tập_lớn_LT_HSK
                     dgvDsNhanVien.Columns["sCCCD"].HeaderText = "Căn cước công dân";
                     dgvDsNhanVien.Columns["sDiaChi"].HeaderText = "Địa chỉ";
                     dgvDsNhanVien.Columns["bGioiTinh"].HeaderText = "Giới tính";
+                  
                     dgvDsNhanVien.Columns["dNgaySinh"].HeaderText = "Ngày sinh";
                     dgvDsNhanVien.Columns["dNgayVaoLam"].HeaderText = "Ngày vào làm";
 
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Lỗi khi tải danh sách nhân viên: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    GhiLog("Lỗi khi tải danh sách nhân viên: " + ex.Message);
                 }
             }
 
@@ -70,6 +74,7 @@ namespace Bài_Tập_lớn_LT_HSK
 
         private void btnTim_Click(object sender, EventArgs e)
         {
+            
             using (SqlConnection conn = new SqlConnection(connString))
             {
                 try
@@ -104,11 +109,7 @@ namespace Bài_Tập_lớn_LT_HSK
                         {
                             cmd.Parameters.AddWithValue("@NgaySinh", ngaySinh);
                         }
-                        else
-                        {
-                            MessageBox.Show("Ngày sinh không hợp lệ. Vui lòng nhập lại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            return;
-                        }
+                        
                     }
 
                     // Xử lý ngày vào làm
@@ -118,11 +119,7 @@ namespace Bài_Tập_lớn_LT_HSK
                         {
                             cmd.Parameters.AddWithValue("@NgayVaoLam", ngayVaoLam);
                         }
-                        else
-                        {
-                            MessageBox.Show("Ngày vào làm không hợp lệ. Vui lòng nhập lại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            return;
-                        }
+                        
                     }
 
                     // Thực thi lệnh tìm kiếm
@@ -130,18 +127,23 @@ namespace Bài_Tập_lớn_LT_HSK
                     DataTable dt = new DataTable();
                     adapter.Fill(dt);
                     dgvDsNhanVien.DataSource = dt;
+                   
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Lỗi khi tìm kiếm nhân viên: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                   GhiLog("Lỗi khi tìm kiếm nhân viên: " + ex.Message);
                 }
             }
         }
 
         private void btnThem_Click(object sender, EventArgs e)
         {
+            LoadData();
+            Refesh();
             trangThaiHienTai = TrangThai.Them;
             ChuyenSangNhapLieu(true);
+            btnLuu.Enabled = false;
+            
 
         }
 
@@ -153,12 +155,15 @@ namespace Bài_Tập_lớn_LT_HSK
             if (trangThaiHienTai == TrangThai.Them)
             {
                 lblTrangThai.Text = "Nhập dữ liệu Nhân viên mới :";
+                btnLuu.Text = "Xác nhận thêm";
             }  else if(trangThaiHienTai == TrangThai.Sua)
             {
                 lblTrangThai.Text = "Chọn Nhân viên cần sửa :";
+                btnLuu.Text = "Xác nhận sửa";
             } else if(trangThaiHienTai == TrangThai.XOA)
             {
                 lblTrangThai.Text = "Chọn Nhân viên cần xóa :";
+                btnLuu.Text = "Xác nhận xóa";
             }   else
             {
                 lblTrangThai.Text = "Nhập thông tin nhân viên :";
@@ -167,7 +172,7 @@ namespace Bài_Tập_lớn_LT_HSK
         }
         private int LayMaNhanVienMoi()
         {
-            int maNV = 1; // Mặc định nếu không có nhân viên nào
+            int maNV = 1; 
 
             using (SqlConnection conn = new SqlConnection(connString))
             {
@@ -175,11 +180,11 @@ namespace Bài_Tập_lớn_LT_HSK
                 {
                     conn.Open();
                     SqlCommand cmd = new SqlCommand("SELECT ISNULL(MAX(iMaNV), 0) + 1 FROM tblNhanvien", conn);
-                    maNV = (int)cmd.ExecuteScalar(); // Lấy giá trị từ SQL
+                    maNV = (int)cmd.ExecuteScalar(); 
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Lỗi khi lấy mã nhân viên mới: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    GhiLog("Lỗi khi lấy mã nhân viên mới: " + ex.Message);
                 }
             }
 
@@ -193,96 +198,131 @@ namespace Bài_Tập_lớn_LT_HSK
                 try
                 {
                     conn.Open();
-                    string query = trangThaiHienTai == TrangThai.Them ? "sp_ThemNhanVien" : "sp_CapNhatNhanVien";
-                    SqlCommand cmd = new SqlCommand(query, conn);
-                    cmd.CommandType = CommandType.StoredProcedure;
+                    string query = "";
 
-                    // Lấy dữ liệu
-                    string hoTen = txtHoTen.Text.Trim();
-                    string dienThoai = txtSdt.Text.Trim();
-                    string cccd = txtCCCD.Text.Trim();
-                    string diaChi = txtDiaChi.Text.Trim();
-                    string matKhau = "123456";
-                    int gioiTinh = rdoNam.Checked ? 1 : 0;
-
-                    // Kiểm tra ràng buộc dữ liệu
-                    if (string.IsNullOrWhiteSpace(hoTen) || string.IsNullOrWhiteSpace(dienThoai) || string.IsNullOrWhiteSpace(cccd))
-                    {
-                        MessageBox.Show("Vui lòng nhập đầy đủ thông tin!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-
-                    if (!dienThoai.All(char.IsDigit) || dienThoai.Length < 10 || dienThoai.Length > 11)
-                    {
-                        MessageBox.Show("Số điện thoại không hợp lệ!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-
-                    if (!cccd.All(char.IsDigit) || cccd.Length != 12)
-                    {
-                        MessageBox.Show("CCCD phải có 12 số!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-
-                    if (!DateTime.TryParseExact(mtbNgaySinh.Text, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out DateTime ngaySinh))
-                    {
-                        MessageBox.Show("Ngày sinh không hợp lệ!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-
-                    if (!DateTime.TryParseExact(mtbNgayVaoLam.Text, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out DateTime ngayVaoLam))
-                    {
-                        MessageBox.Show("Ngày vào làm không hợp lệ!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-
-                    // Gán tham số cho Stored Procedure
                     if (trangThaiHienTai == TrangThai.Them)
-                    {
-                        int maNV = LayMaNhanVienMoi();
-                        cmd.Parameters.AddWithValue("@MaNV", maNV);
-                        cmd.Parameters.AddWithValue("@MatKhau", matKhau);
-                    }
+                        query = "sp_ThemNhanVien";
                     else if (trangThaiHienTai == TrangThai.Sua)
-                    {
-                        int maNV = Convert.ToInt32(dgvDsNhanVien.SelectedRows[0].Cells["iMaNV"].Value);
-                        cmd.Parameters.AddWithValue("@MaNV", maNV);
-                    }
+                        query = "sp_CapNhatNhanVien";
+                    else if (trangThaiHienTai == TrangThai.XOA)
+                        query = "sp_XoaNhanVienKhongLienKet";
 
-                    cmd.Parameters.AddWithValue("@HoTen", hoTen);
-                    cmd.Parameters.AddWithValue("@GioiTinh", gioiTinh);
-                    cmd.Parameters.AddWithValue("@NgaySinh", ngaySinh);
-                    cmd.Parameters.AddWithValue("@CCCD", cccd);
-                    cmd.Parameters.AddWithValue("@DienThoai", dienThoai);
-                    cmd.Parameters.AddWithValue("@NgayVaoLam", ngayVaoLam);
-                    cmd.Parameters.AddWithValue("@DiaChi", diaChi);
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        int maNV = 0;
 
-                    // Thực thi
-                    int result = cmd.ExecuteNonQuery();
-                    if (result > 0)
-                    {
-                        string msg = trangThaiHienTai == TrangThai.Them ? "Thêm nhân viên thành công!" : "Cập nhật nhân viên thành công!";
-                        MessageBox.Show(msg, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        LoadData();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Thao tác thất bại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        if (trangThaiHienTai == TrangThai.Them)
+                        {
+                            // Lấy mã nhân viên mới
+                            maNV = LayMaNhanVienMoi();
+                            cmd.Parameters.AddWithValue("@MaNV", maNV);
+                            cmd.Parameters.AddWithValue("@MatKhau", "123456");
+                        }
+                        else
+                        {
+    
+                            maNV = Convert.ToInt32(dgvDsNhanVien.SelectedRows[0].Cells["iMaNV"].Value);
+                            cmd.Parameters.AddWithValue("@MaNV", maNV);
+                        }
+
+                        if (trangThaiHienTai == TrangThai.XOA)
+                        {
+                           
+                                int result = cmd.ExecuteNonQuery();
+                            if (result > 0)
+                            {
+                                LoadData();
+                            }
+                                bool nhanVienConTonTai = dgvDsNhanVien.Rows
+                                                                        .Cast<DataGridViewRow>()
+                                                .Any(row => Convert.ToInt32(row.Cells["iMaNV"].Value) == maNV);
+
+                                if (nhanVienConTonTai)
+                                {
+                                    lblThongBao.Text = "Nhân viên còn tồn tại trong hóa đơn !!!";
+                                    lblThongBao.Visible = true;
+                                }
+                                else
+                                {
+                                    lblThongBao.Text = "Đã xóa nhân viên !";
+                                    lblThongBao.Visible = true;
+                                }    
+ 
+                        }
+                        else
+                        {
+                            // Lấy dữ liệu từ form
+                            string hoTen = txtHoTen.Text.Trim();
+                            string dienThoai = txtSdt.Text.Trim();
+                            string cccd = txtCCCD.Text.Trim();
+                            string diaChi = txtDiaChi.Text.Trim();
+                            int gioiTinh = rdoNam.Checked ? 1 : 0;
+
+                            // Kiểm tra ngày hợp lệ
+                            if (!DateTime.TryParseExact(mtbNgaySinh.Text, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out DateTime ngaySinh))
+                            {
+                                
+                               
+                            }
+                            if (!DateTime.TryParseExact(mtbNgayVaoLam.Text, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out DateTime ngayVaoLam))
+                            {
+                                
+                                
+                            }
+
+                            cmd.Parameters.AddWithValue("@HoTen", hoTen);
+                            cmd.Parameters.AddWithValue("@GioiTinh", gioiTinh);
+                            cmd.Parameters.AddWithValue("@NgaySinh", ngaySinh);
+                            cmd.Parameters.AddWithValue("@CCCD", cccd);
+                            cmd.Parameters.AddWithValue("@DienThoai", dienThoai);
+                            cmd.Parameters.AddWithValue("@NgayVaoLam", ngayVaoLam);
+                            cmd.Parameters.AddWithValue("@DiaChi", diaChi);
+
+                            int result = cmd.ExecuteNonQuery();
+                            if (result > 0)
+                            {
+                                LoadData();
+                                ChonNhanVienTrongDanhSach(maNV);
+                            }
+                           
+                        }
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Lỗi: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    
+                    GhiLog("Lỗi: " + ex.Message);
                 }
             }
             ChuyenSangNhapLieu(false);
+           
         }
+
+
+
+        private void ChonNhanVienTrongDanhSach(int maNV)
+        {
+            foreach (DataGridViewRow row in dgvDsNhanVien.Rows)
+            {
+                if (Convert.ToInt32(row.Cells["iMaNV"].Value) == maNV)
+                {
+                    row.Selected = true;
+                    dgvDsNhanVien.CurrentCell = row.Cells[1]; // Chọn ô đầu tiên để tránh lỗi
+                    break;
+                }
+            }
+        }
+
 
 
         private void btnSua_Click(object sender, EventArgs e)
         {
+            LoadData();
+            Refesh();
             trangThaiHienTai = TrangThai.Sua;
             ChuyenSangNhapLieu(true);
+            btnLuu.Enabled = false;
         }
 
     
@@ -309,23 +349,37 @@ namespace Bài_Tập_lớn_LT_HSK
                     DateTime ngayVaoLam = Convert.ToDateTime(row.Cells["dNgayVaoLam"].Value);
                     mtbNgayVaoLam.Text = ngayVaoLam.ToString("dd/MM/yyyy");
 
+                    btnLuu.Enabled = true;
                 }
-            }    
+            }
+            else
+            {
+                btnLuu.Enabled = false;
+            } 
+                
             
         }
 
         private void btnXoa_Click(object sender, EventArgs e)
         {
+            LoadData();
+            Refesh();
             trangThaiHienTai = TrangThai.XOA;
             ChuyenSangNhapLieu(true);
-
-
-
-
-           
+            btnLuu.Enabled = false;
+            if (dgvDsNhanVien.SelectedRows.Count > 0)
+            {
+                btnLuu.Enabled = true;
+            }
         }
 
         private void btnHuy_Click(object sender, EventArgs e)
+        {
+           
+            Refesh();
+        }
+
+        private void Refesh()
         {
             trangThaiHienTai = TrangThai.None;
             ChuyenSangNhapLieu(false);
@@ -342,8 +396,95 @@ namespace Bài_Tập_lớn_LT_HSK
             rdoNam.Checked = false;
             rdoNu.Checked = false;
 
+            btnLuu.Text = "Lưu";
             // Tải lại dữ liệu
             LoadData();
+            lblThongBao.Visible = false;
         }
+
+        private void GhiLog(string noiDung)
+        {
+            string connString = ConfigurationManager.ConnectionStrings["db_btlQuanLiBanHang"]?.ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                try
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand("sp_GhiLog", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@NoiDung", noiDung);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Refesh();
+                    System.IO.File.AppendAllText("error_log.txt", DateTime.Now + ": " + ex.Message + Environment.NewLine);
+                }
+            }
+        }
+        private void KiemTraDuLieu()
+        {
+            bool hopLe = true;
+
+            if (string.IsNullOrWhiteSpace(txtHoTen.Text) ||
+                string.IsNullOrWhiteSpace(txtSdt.Text) ||
+                string.IsNullOrWhiteSpace(txtCCCD.Text) ||
+                string.IsNullOrWhiteSpace(txtDiaChi.Text) ||
+                !mtbNgaySinh.MaskCompleted ||
+                !mtbNgayVaoLam.MaskCompleted ||
+                (!rdoNam.Checked && !rdoNu.Checked))
+            {
+                hopLe = false;
+            }
+
+            // Kiểm tra định dạng số điện thoại
+            if (!txtSdt.Text.All(char.IsDigit) || txtSdt.Text.Length < 10 || txtSdt.Text.Length > 11)
+            {
+                hopLe = false;
+            }
+
+            // Kiểm tra định dạng CCCD
+            if (!txtCCCD.Text.All(char.IsDigit) || txtCCCD.Text.Length != 12)
+            {
+                hopLe = false;
+            }
+
+            // Kiểm tra ngày hợp lệ
+            if (!DateTime.TryParseExact(mtbNgaySinh.Text, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out _) ||
+                !DateTime.TryParseExact(mtbNgayVaoLam.Text, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out _))
+            {
+                hopLe = false;
+            }
+
+            btnLuu.Enabled = hopLe;
+            
+        }
+
+        private void KiemTraTimKiem()
+        {
+             bool b= !string.IsNullOrWhiteSpace(txtHoTen.Text) ||
+                             !string.IsNullOrWhiteSpace(txtSdt.Text) ||
+                             !string.IsNullOrWhiteSpace(txtCCCD.Text) ||
+                             !string.IsNullOrWhiteSpace(txtDiaChi.Text) ||
+                             mtbNgaySinh.MaskCompleted ||
+                             mtbNgayVaoLam.MaskCompleted ||
+                             (rdoNam.Checked || rdoNu.Checked);
+            btnTim.Enabled = b;
+            btnHuy.Enabled = b;
+        }
+
+
+        private void txtHoTen_TextChanged(object sender, EventArgs e) { KiemTraDuLieu(); KiemTraTimKiem(); }
+        private void txtSdt_TextChanged(object sender, EventArgs e) { KiemTraDuLieu(); KiemTraTimKiem(); }
+        private void txtCCCD_TextChanged(object sender, EventArgs e) { KiemTraDuLieu(); KiemTraTimKiem(); }
+        private void txtDiaChi_TextChanged(object sender, EventArgs e) { KiemTraDuLieu(); KiemTraTimKiem(); }
+        private void mtbNgaySinh_TextChanged(object sender, EventArgs e) { KiemTraDuLieu(); KiemTraTimKiem(); }
+        private void mtbNgayVaoLam_TextChanged(object sender, EventArgs e) { KiemTraDuLieu(); KiemTraTimKiem(); }
+        private void rdoNam_CheckedChanged(object sender, EventArgs e) { KiemTraDuLieu(); KiemTraTimKiem(); }
+        private void rdoNu_CheckedChanged(object sender, EventArgs e) { KiemTraDuLieu(); KiemTraTimKiem(); }
+
+      
     }
 }

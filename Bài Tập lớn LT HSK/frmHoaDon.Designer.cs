@@ -32,6 +32,8 @@ namespace Bài_Tập_lớn_LT_HSK
             this.dgvHoaDon = new System.Windows.Forms.DataGridView();
             this.btnChiTiet = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.rboHoaDonNhap = new System.Windows.Forms.RadioButton();
+            this.rboHoaDonBan = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHoaDon)).BeginInit();
             this.SuspendLayout();
             // 
@@ -45,6 +47,7 @@ namespace Bài_Tập_lớn_LT_HSK
             this.dgvHoaDon.Size = new System.Drawing.Size(999, 355);
             this.dgvHoaDon.TabIndex = 0;
             this.dgvHoaDon.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHoaDon_CellContentClick);
+            this.dgvHoaDon.SelectionChanged += new System.EventHandler(this.dgvHoaDon_SelectionChanged);
             // 
             // btnChiTiet
             // 
@@ -65,11 +68,35 @@ namespace Bài_Tập_lớn_LT_HSK
             this.label1.TabIndex = 2;
             this.label1.Text = "Danh sách hóa đơn";
             // 
+            // rboHoaDonNhap
+            // 
+            this.rboHoaDonNhap.AutoSize = true;
+            this.rboHoaDonNhap.Location = new System.Drawing.Point(856, 34);
+            this.rboHoaDonNhap.Name = "rboHoaDonNhap";
+            this.rboHoaDonNhap.Size = new System.Drawing.Size(155, 21);
+            this.rboHoaDonNhap.TabIndex = 3;
+            this.rboHoaDonNhap.TabStop = true;
+            this.rboHoaDonNhap.Text = "Hóa đơn nhập hàng";
+            this.rboHoaDonNhap.UseVisualStyleBackColor = true;
+            // 
+            // rboHoaDonBan
+            // 
+            this.rboHoaDonBan.AutoSize = true;
+            this.rboHoaDonBan.Location = new System.Drawing.Point(703, 36);
+            this.rboHoaDonBan.Name = "rboHoaDonBan";
+            this.rboHoaDonBan.Size = new System.Drawing.Size(147, 21);
+            this.rboHoaDonBan.TabIndex = 4;
+            this.rboHoaDonBan.TabStop = true;
+            this.rboHoaDonBan.Text = "Hóa đơn bán hàng";
+            this.rboHoaDonBan.UseVisualStyleBackColor = true;
+            // 
             // frmHoaDon
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1023, 541);
+            this.Controls.Add(this.rboHoaDonBan);
+            this.Controls.Add(this.rboHoaDonNhap);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnChiTiet);
             this.Controls.Add(this.dgvHoaDon);
@@ -87,5 +114,7 @@ namespace Bài_Tập_lớn_LT_HSK
         private System.Windows.Forms.DataGridView dgvHoaDon;
         private System.Windows.Forms.Button btnChiTiet;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.RadioButton rboHoaDonNhap;
+        private System.Windows.Forms.RadioButton rboHoaDonBan;
     }
 }
