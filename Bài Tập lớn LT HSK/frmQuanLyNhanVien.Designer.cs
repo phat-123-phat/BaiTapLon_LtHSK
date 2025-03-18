@@ -53,6 +53,7 @@ namespace Bài_Tập_lớn_LT_HSK
             this.mtbNgaySinh = new System.Windows.Forms.MaskedTextBox();
             this.lblTrangThai = new System.Windows.Forms.Label();
             this.lblThongBao = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDsNhanVien)).BeginInit();
             this.SuspendLayout();
             // 
@@ -282,11 +283,22 @@ namespace Bài_Tập_lớn_LT_HSK
             this.lblThongBao.TabIndex = 25;
             this.lblThongBao.Text = "label8";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(681, 275);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(107, 30);
+            this.button1.TabIndex = 26;
+            this.button1.Text = "In Báo cáo";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // frmQuanLyNhanVien
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 678);
+            this.ClientSize = new System.Drawing.Size(834, 678);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.lblThongBao);
             this.Controls.Add(this.lblTrangThai);
             this.Controls.Add(this.mtbNgayVaoLam);
@@ -346,5 +358,6 @@ namespace Bài_Tập_lớn_LT_HSK
         private System.Windows.Forms.MaskedTextBox mtbNgaySinh;
         private System.Windows.Forms.Label lblTrangThai;
         private System.Windows.Forms.Label lblThongBao;
+        private System.Windows.Forms.Button button1;
     }
 }

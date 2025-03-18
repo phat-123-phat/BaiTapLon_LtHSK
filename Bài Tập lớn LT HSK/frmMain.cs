@@ -42,11 +42,12 @@ namespace Bài_Tập_lớn_LT_HSK
         private void toolStripMenuItem3_Click(object sender, EventArgs e)
         {
             OpenChildForm(new frmDanhMucHangHoa());
+
         }
 
         private void quảnLýKháchHàngToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            OpenChildForm(new frmKhachHang());
         }
 
         private void toolStripMenuItem8_Click(object sender, EventArgs e)

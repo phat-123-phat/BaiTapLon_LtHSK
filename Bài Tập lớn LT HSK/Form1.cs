@@ -14,12 +14,11 @@ namespace Bài_Tập_lớn_LT_HSK
 {
     public partial class frmDangNhap : Form
     {
-        
         public frmDangNhap()
         {
             InitializeComponent();
             lblThongBao.Text = "";
-            btnDangNhap.Enabled = false; 
+            btnDangNhap.Enabled = false;
         }
 
         private void frmDangNhap_Load(object sender, EventArgs e)
@@ -33,8 +32,7 @@ namespace Bài_Tập_lớn_LT_HSK
             string matKhau = txtMatKhau.Text.Trim();
 
             string connString = ConfigurationManager.ConnectionStrings["db_btlQuanLiBanHang"]?.ConnectionString;
-               
-           
+
             using (SqlConnection conn = new SqlConnection(connString))
             {
                 try
@@ -67,22 +65,21 @@ namespace Bài_Tập_lớn_LT_HSK
                     lblThongBao.Text = "Lỗi , vui lòng thử lại sau!";
                     Refesh();
                 }
+                
             }
         }
-
 
         public void Refesh()
         {
             txtSdt.Text = "";
             txtMatKhau.Text = "";
             btnDangNhap.Enabled = false;
-           
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            txtSdt.Text = "0901123456";
-            txtMatKhau.Text = "123456";
+            txtSdt.Text = "0901123458";
+            txtMatKhau.Text = "123456aB!";
         }
 
         private void btnThoat_Click(object sender, EventArgs e)
@@ -95,18 +92,26 @@ namespace Bài_Tập_lớn_LT_HSK
             txtMatKhau.PasswordChar = chkHienMatKhau.Checked ? '\0' : '*';
         }
 
-
         private void KiemTraHopLe()
         {
             string soDienThoai = txtSdt.Text.Trim();
             string matKhau = txtMatKhau.Text.Trim();
 
             bool sdtHopLe = soDienThoai.Length >= 10 && soDienThoai.Length <= 12 && soDienThoai.All(char.IsDigit);
-            bool matKhauHopLe = matKhau.Length >= 6;
+            bool matKhauHopLe = matKhau.Length >= 6 && KiemTraMatKhau(matKhau);
 
             btnDangNhap.Enabled = sdtHopLe && matKhauHopLe;
         }
 
+        private bool KiemTraMatKhau(string matKhau)
+        {
+            bool coChuHoa = matKhau.Any(char.IsUpper);       // Kiểm tra có ít nhất một chữ hoa
+            bool coChuThuong = matKhau.Any(char.IsLower);   // Kiểm tra có ít nhất một chữ thường
+            bool coSo = matKhau.Any(char.IsDigit);          // Kiểm tra có ít nhất một số
+            bool coKyTuDacBiet = matKhau.Any(c => !char.IsLetterOrDigit(c)); // Kiểm tra có ít nhất một ký tự đặc biệt
+
+            return coChuHoa && coChuThuong && coSo && coKyTuDacBiet;
+        }
 
         private void txtSdt_TextChanged(object sender, EventArgs e)
         {
@@ -117,6 +122,7 @@ namespace Bài_Tập_lớn_LT_HSK
         {
             KiemTraHopLe();
         }
+
         private void GhiLog(string noiDung)
         {
             string connString = ConfigurationManager.ConnectionStrings["db_btlQuanLiBanHang"]?.ConnectionString;

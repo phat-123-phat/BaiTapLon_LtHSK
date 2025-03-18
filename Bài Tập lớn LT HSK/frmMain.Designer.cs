@@ -55,15 +55,15 @@ namespace Bài_Tập_lớn_LT_HSK
             this.thoátToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(950, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1128, 28);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(143, 24);
-            this.toolStripMenuItem3.Text = "Quản lý hàng hóa ";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(156, 24);
+            this.toolStripMenuItem3.Text = "Danh mục hàng hóa";
             this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
             // 
             // quảnLýKháchHàngToolStripMenuItem
@@ -76,8 +76,8 @@ namespace Bài_Tập_lớn_LT_HSK
             // toolStripMenuItem7
             // 
             this.toolStripMenuItem7.Name = "toolStripMenuItem7";
-            this.toolStripMenuItem7.Size = new System.Drawing.Size(132, 24);
-            this.toolStripMenuItem7.Text = "Quản lý hóa đơn";
+            this.toolStripMenuItem7.Size = new System.Drawing.Size(161, 24);
+            this.toolStripMenuItem7.Text = "Quản lý hóa đơn bán";
             this.toolStripMenuItem7.Click += new System.EventHandler(this.toolStripMenuItem7_Click);
             // 
             // toolStripMenuItem8
@@ -109,7 +109,7 @@ namespace Bài_Tập_lớn_LT_HSK
             this.lblThoiGian});
             this.statusStrip1.Location = new System.Drawing.Point(0, 585);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(950, 26);
+            this.statusStrip1.Size = new System.Drawing.Size(1128, 26);
             this.statusStrip1.TabIndex = 3;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -129,7 +129,7 @@ namespace Bài_Tập_lớn_LT_HSK
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(950, 611);
+            this.ClientSize = new System.Drawing.Size(1128, 611);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;

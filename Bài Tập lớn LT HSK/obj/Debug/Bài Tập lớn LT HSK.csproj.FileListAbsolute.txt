@@ -34,3 +34,7 @@ C:\Users\Admin\Desktop\Bài tập lớn - Hướng sự kiện\Project\Bài Tậ
 C:\Users\Admin\Desktop\Bài tập lớn - Hướng sự kiện\Project\Bài Tập lớn LT HSK\Bài Tập lớn LT HSK\bin\Debug\CrystalDecisions.ReportAppServer.CommonControls.dll
 C:\Users\Admin\Desktop\Bài tập lớn - Hướng sự kiện\Project\Bài Tập lớn LT HSK\Bài Tập lớn LT HSK\obj\Debug\Bài_Tập_lớn_LT_HSK.frmReport.resources
 C:\Users\Admin\Desktop\Bài tập lớn - Hướng sự kiện\Project\Bài Tập lớn LT HSK\Bài Tập lớn LT HSK\obj\Debug\Bài Tập lớn LT HSK.csproj.CopyComplete
+C:\Users\Admin\Desktop\Bài tập lớn - Hướng sự kiện\Project\Bài Tập lớn LT HSK\Bài Tập lớn LT HSK\obj\Debug\Bài_Tập_lớn_LT_HSK.frmKetQuaTimKiem.resources
+C:\Users\Admin\Desktop\Bài tập lớn - Hướng sự kiện\Project\Bài Tập lớn LT HSK\Bài Tập lớn LT HSK\obj\Debug\Bài_Tập_lớn_LT_HSK.frmKhachHang.resources
+C:\Users\Admin\Desktop\Bài tập lớn - Hướng sự kiện\Project\Bài Tập lớn LT HSK\Bài Tập lớn LT HSK\obj\Debug\Bài_Tập_lớn_LT_HSK.frmInBaoCao.resources
+C:\Users\Admin\Desktop\Bài tập lớn - Hướng sự kiện\Project\Bài Tập lớn LT HSK\Bài Tập lớn LT HSK\obj\Debug\Bài_Tập_lớn_LT_HSK.frmXemBaoCao.resources

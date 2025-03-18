@@ -59,6 +59,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>db_btlQuanLiBanHang2DataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="db_btlQuanLiBanHang2DataSet1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>db_btlQuanLiBanHang2DataSet1.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -83,6 +88,24 @@
     <Compile Include="frmHoaDon.Designer.cs">
       <DependentUpon>frmHoaDon.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmInBaoCao.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmInBaoCao.Designer.cs">
+      <DependentUpon>frmInBaoCao.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmKetQuaTimKiem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmKetQuaTimKiem.Designer.cs">
+      <DependentUpon>frmKetQuaTimKiem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmKhachHang.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmKhachHang.Designer.cs">
+      <DependentUpon>frmKhachHang.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -101,14 +124,32 @@
     <Compile Include="frmReport.Designer.cs">
       <DependentUpon>frmReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmXemBaoCao.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmXemBaoCao.Designer.cs">
+      <DependentUpon>frmXemBaoCao.cs</DependentUpon>
+    </Compile>
     <Compile Include="HoaDon.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>HoaDon.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="NhanVien.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NhanVien.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="rptKhachHangHoaDon.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptKhachHangHoaDon.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -121,6 +162,15 @@
     <EmbeddedResource Include="frmHoaDon.resx">
       <DependentUpon>frmHoaDon.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmInBaoCao.resx">
+      <DependentUpon>frmInBaoCao.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmKetQuaTimKiem.resx">
+      <DependentUpon>frmKetQuaTimKiem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmKhachHang.resx">
+      <DependentUpon>frmKhachHang.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
     </EmbeddedResource>
@@ -130,9 +180,16 @@
     <EmbeddedResource Include="frmReport.resx">
       <DependentUpon>frmReport.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmXemBaoCao.resx">
+      <DependentUpon>frmXemBaoCao.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="HoaDon.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>HoaDon.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NhanVien.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>NhanVien.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -143,6 +200,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="rptKhachHangHoaDon.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptKhachHangHoaDon.cs</LastGenOutput>
+    </EmbeddedResource>
     <None Include="db_btlQuanLiBanHang2DataSet.xsc">
       <DependentUpon>db_btlQuanLiBanHang2DataSet.xsd</DependentUpon>
     </None>
@@ -153,6 +214,17 @@
     </None>
     <None Include="db_btlQuanLiBanHang2DataSet.xss">
       <DependentUpon>db_btlQuanLiBanHang2DataSet.xsd</DependentUpon>
+    </None>
+    <None Include="db_btlQuanLiBanHang2DataSet1.xsc">
+      <DependentUpon>db_btlQuanLiBanHang2DataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="db_btlQuanLiBanHang2DataSet1.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>db_btlQuanLiBanHang2DataSet1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="db_btlQuanLiBanHang2DataSet1.xss">
+      <DependentUpon>db_btlQuanLiBanHang2DataSet1.xsd</DependentUpon>
     </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

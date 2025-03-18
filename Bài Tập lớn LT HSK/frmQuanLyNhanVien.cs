@@ -127,7 +127,11 @@ namespace Bài_Tập_lớn_LT_HSK
                     DataTable dt = new DataTable();
                     adapter.Fill(dt);
                     dgvDsNhanVien.DataSource = dt;
-                   
+
+                    frmKetQuaTimKiem frmKetQua = new frmKetQuaTimKiem(dt);
+                    frmKetQua.ShowDialog();
+
+
                 }
                 catch (Exception ex)
                 {
@@ -485,6 +489,40 @@ namespace Bài_Tập_lớn_LT_HSK
         private void rdoNam_CheckedChanged(object sender, EventArgs e) { KiemTraDuLieu(); KiemTraTimKiem(); }
         private void rdoNu_CheckedChanged(object sender, EventArgs e) { KiemTraDuLieu(); KiemTraTimKiem(); }
 
-      
+        private void button1_Click(object sender, EventArgs e)
+        {
+            DataTable data = null;
+            if (dgvDsNhanVien.DataSource != null)
+            {
+                 data = (DataTable)dgvDsNhanVien.DataSource;
+             
+            }
+            else
+            {
+                MessageBox.Show("Không có dữ liệu để in!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            string hoTen = txtHoTen.Text.Trim();
+            string dienThoai = txtSdt.Text.Trim();
+            string cccd = txtCCCD.Text.Trim();
+            string diaChi = txtDiaChi.Text.Trim();
+            bool? gioiTinh = rdoNam.Checked ? true : (rdoNu.Checked ? false : (bool?)null);
+            DateTime? ngaySinh = ConvertMaskedTextBoxToDate(mtbNgaySinh.Text);
+            DateTime? ngayVaoLam = ConvertMaskedTextBoxToDate(mtbNgayVaoLam.Text);
+
+            // Mở Form báo cáo và truyền các giá trị tìm kiếm
+            frmInBaoCao frm = new frmInBaoCao(hoTen, dienThoai, cccd, diaChi, gioiTinh, ngaySinh, ngayVaoLam, data);
+            frm.ShowDialog();
+        }
+        private DateTime? ConvertMaskedTextBoxToDate(string input)
+        {
+            DateTime dateValue;
+            if (DateTime.TryParseExact(input, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out dateValue))
+            {
+                return dateValue;
+            }
+            return null; // Trả về null nếu nhập không hợp lệ
+        }
+       
+
     }
 }

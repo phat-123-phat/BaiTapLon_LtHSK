@@ -20,6 +20,7 @@ namespace Bài_Tập_lớn_LT_HSK
         {
             InitializeComponent();
             this.maHD = maHD;
+            
         }
 
         private void frmChiTietHoaDon_Load(object sender, EventArgs e)
